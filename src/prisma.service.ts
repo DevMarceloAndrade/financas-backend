@@ -4,10 +4,14 @@ import { PrismaClient } from '@prisma/client';
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
     constructor() {
-        super({
-            datasourceUrl: 'file:./dev.db', // Ou process.env.DATABASE_URL
-        });
-    }
+    super({
+      datasources: {
+        db: {
+          url: 'file:./dev.db', // Use o mesmo nome (db) que está no seu schema.prisma
+        },
+      },
+    });
+  }
     async onModuleInit() {
         await this.$connect();
     }
