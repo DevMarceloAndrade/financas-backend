@@ -1,0 +1,30 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Item {
+  id           String        @id @default(uuid())
+  type         String        // 'gastos' ou 'investimentos'
+  period       String        // ex: '2026-03'
+  group        String        // ex: 'GASTOS (pix)', 'RENDA FIXA'
+  name         String        // ex: 'Mercado', 'Tesouro Selic'
+  forecast     Float         // Valor previsto/meta
+  transactions Transaction[] // Relacionamento com lançamentos
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Transaction {
+  id        String   @id @default(uuid())
+  desc      String   // Descrição (ex: 'Roupa nova', 'Aporte mensal')
+  amount    Float    // Valor da transação
+  itemId    String   // Chave estrangeira
+  item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
