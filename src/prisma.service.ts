@@ -7,10 +7,10 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
         super({
             datasources: {
                 db: {
-                    url: 'file:./dev.db', // Use o mesmo nome (db) que está no seu schema.prisma
+                    url: process.env.DATABASE_URL,
                 },
             },
-        });
+        });;
     }
     async onModuleInit() {
         await this.$connect();
