@@ -8,15 +8,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from './generated/prisma/client.js';
+import { Pool } from 'pg';
+import { PrismaPg } from '@prisma/adapter-pg';
+import { PrismaClient } from '@prisma/client';
 let PrismaService = class PrismaService extends PrismaClient {
     constructor() {
-        super({
-            accelerateUrl: "postgresql://postgres:1010@localhost:5432/financedb?schema=public",
+        const pool = new Pool({
+            connectionString: "postgresql://postgres:1010@localhost:5432/financedb?schema=public"
         });
+        const adapter = new PrismaPg(pool);
+        super({ adapter });
     }
     async onModuleInit() {
         await this.$connect();
+    }
+    async onModuleDestroy() {
+        await this.$disconnect();
     }
 };
 PrismaService = __decorate([
