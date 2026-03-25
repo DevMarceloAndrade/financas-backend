@@ -1,29 +1,24 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { PrismaLibSql } from '@prisma/adapter-libsql'; // Alterado de SQL para Sql
+import { PrismaClient } from '@prisma/client';
+import { PrismaLibSql } from '@prisma/adapter-libsql';
 import { createClient } from '@libsql/client';
-import { Prisma } from '@prisma/client';
-import PrismaClient = Prisma.PrismaClient;
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
     constructor() {
-        // 1. Criamos o objeto de configuração
-        const config = {
-            url: process.env.DATABASE_URL as string,
-        };
+        const libsql = createClient({
+            url: process.env.DATABASE_URL!,
+        });
 
-        // 2. Criamos o cliente do LibSQL
-        const libsql = createClient(config);
+        const adapter = new PrismaLibSql(libsql);
 
-        // 3. O adaptador espera o cliente, mas se o TS reclamar do tipo,
-        // garantimos que ele aceite a instância do libsql usando 'as any'
-        // ou passando a configuração se o seu pacote for uma versão experimental.
-        const adapter = new PrismaLibSql(libsql as any);
-
+        // Passamos o adaptador para o super (PrismaClient)
         super({ adapter });
     }
 
     async onModuleInit() {
-        await this.$connect();
+        // No Prisma 7 com Adaptadores, o $connect é opcional, 
+        // mas vamos mantê-lo para garantir a prontidão do serviço
+        await (this as any).$connect();
     }
 }
