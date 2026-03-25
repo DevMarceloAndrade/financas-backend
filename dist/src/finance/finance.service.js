@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,10 +7,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.FinanceService = void 0;
-const common_1 = require("@nestjs/common");
-const prisma_service_1 = require("../prisma.service");
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaService } from '../prisma.service.js';
 let FinanceService = class FinanceService {
     prisma;
     constructor(prisma) {
@@ -45,7 +42,7 @@ let FinanceService = class FinanceService {
             return await this.prisma.item.delete({ where: { id } });
         }
         catch (error) {
-            throw new common_1.NotFoundException('Item não encontrado.');
+            throw new NotFoundException('Item não encontrado.');
         }
     }
     async addTransaction(itemId, data) {
@@ -62,13 +59,13 @@ let FinanceService = class FinanceService {
             return await this.prisma.transaction.delete({ where: { id: txId } });
         }
         catch (error) {
-            throw new common_1.NotFoundException('Transação não encontrada.');
+            throw new NotFoundException('Transação não encontrada.');
         }
     }
 };
-exports.FinanceService = FinanceService;
-exports.FinanceService = FinanceService = __decorate([
-    (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
+FinanceService = __decorate([
+    Injectable(),
+    __metadata("design:paramtypes", [PrismaService])
 ], FinanceService);
+export { FinanceService };
 //# sourceMappingURL=finance.service.js.map

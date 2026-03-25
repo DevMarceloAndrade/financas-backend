@@ -1,4 +1,4 @@
-import { FinanceService } from './finance.service';
+import { FinanceService } from './finance.service.js';
 export declare class FinanceController {
     private readonly financeService;
     constructor(financeService: FinanceService);

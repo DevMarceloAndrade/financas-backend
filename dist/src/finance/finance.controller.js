@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11,10 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.FinanceController = void 0;
-const common_1 = require("@nestjs/common");
-const finance_service_1 = require("./finance.service");
+import { Controller, Get, Post, Body, Param, Delete, Query } from '@nestjs/common';
+import { FinanceService } from './finance.service.js';
 let FinanceController = class FinanceController {
     financeService;
     constructor(financeService) {
@@ -38,46 +35,46 @@ let FinanceController = class FinanceController {
         return this.financeService.removeTransaction(txId);
     }
 };
-exports.FinanceController = FinanceController;
 __decorate([
-    (0, common_1.Get)(),
-    __param(0, (0, common_1.Query)('type')),
-    __param(1, (0, common_1.Query)('period')),
+    Get(),
+    __param(0, Query('type')),
+    __param(1, Query('period')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
 ], FinanceController.prototype, "findAll", null);
 __decorate([
-    (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
+    Post(),
+    __param(0, Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], FinanceController.prototype, "createItem", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    Delete(':id'),
+    __param(0, Param('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], FinanceController.prototype, "deleteItem", null);
 __decorate([
-    (0, common_1.Post)(':itemId/transactions'),
-    __param(0, (0, common_1.Param)('itemId')),
-    __param(1, (0, common_1.Body)()),
+    Post(':itemId/transactions'),
+    __param(0, Param('itemId')),
+    __param(1, Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", void 0)
 ], FinanceController.prototype, "addTransaction", null);
 __decorate([
-    (0, common_1.Delete)('transactions/:txId'),
-    __param(0, (0, common_1.Param)('txId')),
+    Delete('transactions/:txId'),
+    __param(0, Param('txId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], FinanceController.prototype, "removeTransaction", null);
-exports.FinanceController = FinanceController = __decorate([
-    (0, common_1.Controller)('finance'),
-    __metadata("design:paramtypes", [finance_service_1.FinanceService])
+FinanceController = __decorate([
+    Controller('finance'),
+    __metadata("design:paramtypes", [FinanceService])
 ], FinanceController);
+export { FinanceController };
 //# sourceMappingURL=finance.controller.js.map

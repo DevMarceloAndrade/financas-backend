@@ -1,4 +1,4 @@
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../prisma.service.js';
 export declare class FinanceService {
     private prisma;
     constructor(prisma: PrismaService);

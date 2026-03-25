@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Param, Delete, Query } from '@nestjs/common';
-import { FinanceService } from './finance.service';
+import { FinanceService } from './finance.service.js';
 
 @Controller('finance')
 export class FinanceController {
